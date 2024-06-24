@@ -22,8 +22,15 @@ os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 os.environ["SERPER_API_KEY"] = st.secrets["SERPER_API_KEY"]
 os.environ["OPENAI_MODEL_NAME"] = st.secrets["OPENAI_MODEL_NAME"]
 
+pdf_file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'ortb_spec_2dot5.pdf')
+
+if not os.path.isfile(pdf_file_path):
+    st.error("PDF file not found at path: " + pdf_file_path)
+else:
+    st.success("PDF file found at path: " + pdf_file_path)
+    
+spec_pdf_tool = PDFSearchTool(pdf=pdf_file_path)
 search_tool = SerperDevTool()
-spec_pdf_tool = PDFSearchTool(pdf="/data/ortb_spec_2dot5.pdf")
 
 # Streamlit interface
 st.title("Bid Request Generator")
