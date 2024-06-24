@@ -22,7 +22,7 @@ os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 os.environ["SERPER_API_KEY"] = st.secrets["SERPER_API_KEY"]
 os.environ["OPENAI_MODEL_NAME"] = st.secrets["OPENAI_MODEL_NAME"]
 
-pdf_file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'ortb_spec_2dot5.pdf')
+pdf_file_path = os.path.join(os.path.dirname(__file__), '.', 'data', 'ortb_spec_2dot5.pdf')
 
 if not os.path.isfile(pdf_file_path):
     st.error("PDF file not found at path: " + pdf_file_path)
