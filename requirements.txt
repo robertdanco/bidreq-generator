@@ -3,5 +3,6 @@ pandas
 streamlit
 crewai
 crewai[tools]
-chromadb==0.3.23
+chromadb
+sqlite3>=3.35.0
 
