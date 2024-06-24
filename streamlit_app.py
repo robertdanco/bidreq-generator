@@ -1,3 +1,4 @@
+
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
@@ -59,12 +60,32 @@ if st.button("Generate Bid Request"):
         tools=[spec_pdf_tool],
     )
 
-    # Define and execute the tasks
     request_intake_task = Task(
-        description="Translate the user request into a list of requirements.",
-        agent=request_intake_agent
+        description="Translate the user request into a discrete list of requirements. Use both the provided openRTB spec PDF as well as internet searches to augment knowledge as necessary.",
+        expected_output="A list of items that represent the mapping of the user request to openRTB field-level requirements, formatted as JSON.",
+        agent=request_intake_agent,
+        priority=1,
+        timeout=60,
     )
     
+    dependency_map_task = Task(
+        description="Uses the provided openRTB spec PDF and requirements list to create a map of the various objects and fields within those objects that are required. This should be done recursively to make sure that cross-dependencies and downstream considerations are accounted for. Also include recommended fields where possible to more closely align with real-world data patterns.",
+        expected_output="A semi-structured list of objects and fields that are required, detailed with interdependencies.",
+        agent=dependency_map_agent,
+        priority=2,
+        timeout=60,
+        dependencies=[request_intake_task.id],  # Ensure this runs after request intake
+    )
+
+    requirement_adherence_task = Task(
+        description="Uses the provided openRTB spec PDF, semi-structured object and field requirements list, and internet research as necessary to generate a structured bid request with both keys and values that meet the requirements. Prefer sample values from the examples found in the spec PDF rather than boilerplate values where possible.",
+        expected_output="A JSON file containing a structured bid request with both keys and values that meet the requirements, validated against the latest spec.",
+        agent=requirement_adherence_agent,
+        # output_file=output_file_path,
+        priority=3,
+        timeout=60,
+        dependencies=[dependency_map_task.id],  # Ensure this runs after dependency mapping
+    )
 
     # Create the project crew
     # crew = Crew([request_intake_agent, dependency_map_agent, requirement_adherence_agent])
