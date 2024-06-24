@@ -3,4 +3,5 @@ pandas
 streamlit
 crewai
 crewai[tools]
-chromadb
+chromadb==0.3.23
+
