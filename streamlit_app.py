@@ -100,7 +100,7 @@ if st.button("Generate Bid Request"):
 
 
     process = Process(crew=project_crew)
-    process.start([request_intake_task])
+    process.start()
         
     # Wait for the process to complete
     while not process.completed:
