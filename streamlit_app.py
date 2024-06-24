@@ -27,7 +27,7 @@ st.title("Bid Request Generator")
 
 # User input
 user_request = st.text_area("Enter your request:", 
-    "generate a bid request from FreeWheel for a connected TV video opportunity with a variety of deals and associated deal types, and include a SupplyChain object. Make sure at least one deal has a different auction type than the overall request."
+    "List your request requirements here!"
 )
 
 if st.button("Generate Bid Request"):
