@@ -100,10 +100,10 @@ if st.button("Generate Bid Request"):
 
 
     process = Process(crew=project_crew)
-        process.start([request_intake_task])
+    process.start([request_intake_task])
         
-        # Wait for the process to complete
-        while not process.completed:
+    # Wait for the process to complete
+    while not process.completed:
             process.step()
     
     raw_output = requirement_adherence_task.output.raw_output
