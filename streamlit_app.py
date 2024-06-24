@@ -98,7 +98,13 @@ if st.button("Generate Bid Request"):
         memory=True,
     )
 
-    project_crew.kickoff()
+
+    process = Process(crew=project_crew)
+        process.start([request_intake_task])
+        
+        # Wait for the process to complete
+        while not process.completed:
+            process.step()
     
     raw_output = requirement_adherence_task.output.raw_output
     json_content = re.search(r"```json\n([\s\S]*?)\n```", raw_output).group(1)
