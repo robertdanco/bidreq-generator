@@ -16,8 +16,8 @@ pdf_file_path = os.path.join(os.path.dirname(__file__), '.', 'data', 'ortb_spec_
 if not os.path.isfile(pdf_file_path):
     st.error("PDF file not found at path: " + pdf_file_path)
 else:
+    pass
     # st.success("PDF file found at path: " + pdf_file_path)
-    continue
     
 spec_pdf_tool = PDFSearchTool(pdf=pdf_file_path)
 search_tool = SerperDevTool()
