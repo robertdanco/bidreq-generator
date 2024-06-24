@@ -7,17 +7,6 @@ import os
 from crewai import Agent, Task, Crew, Process
 from crewai_tools import SerperDevTool, PDFSearchTool
 
-"""
-# Welcome to Streamlit!
-
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:.
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
-
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
-
-
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 os.environ["SERPER_API_KEY"] = st.secrets["SERPER_API_KEY"]
 os.environ["OPENAI_MODEL_NAME"] = st.secrets["OPENAI_MODEL_NAME"]
@@ -27,7 +16,8 @@ pdf_file_path = os.path.join(os.path.dirname(__file__), '.', 'data', 'ortb_spec_
 if not os.path.isfile(pdf_file_path):
     st.error("PDF file not found at path: " + pdf_file_path)
 else:
-    st.success("PDF file found at path: " + pdf_file_path)
+    # st.success("PDF file found at path: " + pdf_file_path)
+    continue
     
 spec_pdf_tool = PDFSearchTool(pdf=pdf_file_path)
 search_tool = SerperDevTool()
