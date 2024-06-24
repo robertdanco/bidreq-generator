@@ -65,19 +65,28 @@ if st.button("Generate Bid Request"):
         agent=request_intake_agent
     )
     
-    # Create Crew
-    crew = Crew([request_intake_agent, dependency_map_agent, requirement_adherence_agent])
 
-    # Run the process
-    process = Process(crew=crew)
-    process.start([request_intake_task])
+    # Create the project crew
+    # crew = Crew([request_intake_agent, dependency_map_agent, requirement_adherence_agent])
+    project_crew = Crew(
+        name="OpenRTB Project Crew",
+        tasks=[request_intake_task, dependency_map_task, requirement_adherence_task],
+        agents=[request_intake_agent, dependency_map_agent, requirement_adherence_agent],
+        process=Process.sequential,
+        memory=True,
+    )
+
+    process = project_crew.kickoff()
     
     # Wait for the process to complete
     while not process.completed:
         process.step()
+
+    raw_output = requirement_adherence_task.output.raw_output
+    json_content = re.search(r"```json\n([\s\S]*?)\n```", raw_output).group(1)
     
     # Display the results
     st.subheader("Bid Request")
-    st.json(process.output)
+    st.json(json_content)
 
 # To run this Streamlit app, save this code to a file (e.g., `app.py`) and run `streamlit run app.py` in your terminal.
