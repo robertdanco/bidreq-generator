@@ -99,7 +99,7 @@ if st.button("Generate Bid Request"):
     )
 
 
-    process = Process(crew=project_crew)
+    process = project_crew.kickoff()
     process.start()
         
     # Wait for the process to complete
