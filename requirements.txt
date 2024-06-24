@@ -1,8 +1,4 @@
-altair
-pandas
 streamlit
 crewai
 crewai[tools]
-chromadb
-sqlite3
 
