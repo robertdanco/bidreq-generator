@@ -97,7 +97,7 @@ if st.button("Generate Bid Request"):
         memory=True,
     )
 
-    process = project_crew.kickoff()
+    process = Process(project_crew.kickoff())
     
     # Wait for the process to complete
     while not process.completed:
