@@ -5,6 +5,7 @@ sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import streamlit as st
 import os
+import re
 from crewai import Agent, Task, Crew, Process
 from crewai_tools import SerperDevTool, PDFSearchTool
 
@@ -65,7 +66,7 @@ if st.button("Generate Bid Request"):
         expected_output="A list of items that represent the mapping of the user request to openRTB field-level requirements, formatted as JSON.",
         agent=request_intake_agent,
         priority=1,
-        timeout=60,
+        timeout=30,
     )
     
     dependency_map_task = Task(
@@ -73,7 +74,7 @@ if st.button("Generate Bid Request"):
         expected_output="A semi-structured list of objects and fields that are required, detailed with interdependencies.",
         agent=dependency_map_agent,
         priority=2,
-        timeout=60,
+        timeout=30,
         dependencies=[request_intake_task.id],  # Ensure this runs after request intake
     )
 
@@ -83,7 +84,7 @@ if st.button("Generate Bid Request"):
         agent=requirement_adherence_agent,
         # output_file=output_file_path,
         priority=3,
-        timeout=60,
+        timeout=30,
         dependencies=[dependency_map_task.id],  # Ensure this runs after dependency mapping
     )
 
